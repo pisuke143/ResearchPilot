@@ -1,0 +1,21 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+ResearchEnv/
+venv/
+
+# Secrets
+.env
+.env.*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Generated artifacts
+artifacts/
+model_cache/
+*.faiss
+*.index
