@@ -1,45 +1,47 @@
-﻿"""Search research papers using their meaning rather than exact keywords."""
+﻿
+"""Search research papers using their meaning rather than exact keywords."""
 
-# process_pdf extracts PDF text and splits it into page-linked chunks.
+# Import the function that extracts PDF text and splits it into chunks.
 from researchpilot.pipeline import process_pdf
 
-# These functions build an index and search it using text embeddings.
+# Import the functions that create a searchable vector index
+# and use it to find chunks similar in meaning to our question.
 from researchpilot.vector_store import build_vector_index, search_vector_index
 
 
 def search_pdf(
-    pdf_path: str,
-    query: str,
-    chunk_size: int = 500,
-    top_k: int = 3,
-) -> list[dict]:
+    pdf_path: str,       # The location of the PDF file on the computer.
+    query: str,          # The question we want to search for.
+    chunk_size: int = 500,  # The maximum target size of each text chunk.
+    top_k: int = 3,      # The maximum number of results to return.
+) -> list[dict]:         # The function returns a list of result dictionaries.
     """Search a PDF and return its most relevant passages."""
 
-    # Step 1: Validate top_k before doing expensive PDF or model work.
-    # top_k is the maximum number of search results to return.
+    # Check that we are asking for at least one search result.
     if top_k < 1:
         raise ValueError("top_k must be at least 1")
 
-    # Step 2: If the question is blank, there is nothing to search for.
-    # Return early without opening the PDF or loading the AI model.
+    # If the question is empty or contains only whitespace, stop here.
+    # This avoids processing the PDF when there is nothing to search for.
     if not query.strip():
         return []
 
-    # Step 3: Extract the PDF's text and split it into manageable chunks.
-    # Each chunk includes its text and the page number it came from.
+    # Open the PDF, extract its text, and split that text into chunks.
+    # Each chunk also remembers which page it came from.
     chunks = process_pdf(pdf_path, chunk_size=chunk_size)
 
-    # Step 4: Handle PDFs that contain no extractable text.
-    # We cannot build a useful index if there are no chunks.
+    # If no text chunks were produced, there is nothing to search.
     if not chunks:
         return []
 
-    # Step 5: Convert the chunks into embeddings and build a FAISS index.
-    # The index helps us find passages whose meanings match the question.
+    # Turn the text chunks into numerical representations called embeddings
+    # and store them in a FAISS index so they can be searched.
     index = build_vector_index(chunks)
 
-    # Step 6: Search the index using the user's question.
-    # The original chunks are passed too, so results retain page numbers.
+    # Turn the question into an embedding and search the index for
+    # the most similar chunks.
+    # We pass the original chunks as well so their text and page numbers
+    # can be included in the results.
     results = search_vector_index(
         query=query,
         chunks=chunks,
@@ -47,5 +49,5 @@ def search_pdf(
         top_k=top_k,
     )
 
-    # Step 7: Return the best-matching passages to the caller.
+    # Give the matching passages back to whoever called this function.
     return results
