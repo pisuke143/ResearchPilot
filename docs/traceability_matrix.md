@@ -1,54 +1,80 @@
 ﻿# ResearchPilot — Requirements Traceability Matrix
 
-## Purpose
-
-This matrix connects SRS requirements to implementation modules and tests.
-It should be updated as the project evolves.
-
-The file names below are suggested mappings. Verify actual implementation and
-test coverage before marking a requirement complete.
-
-| Requirement | Planned implementation area | Test evidence | Initial status |
-|---|---|---|---|
-| FR-001 PDF input | `pdf_processing.py`, document manager | PDF input tests | Existing foundation; verify |
-| FR-002 Input validation | ingestion layer | Invalid path and malformed PDF tests | Verify |
-| FR-003 Text extraction | `pdf_processing.py` | Extraction tests | Existing foundation; verify |
-| FR-004 Provenance | processing pipeline | Page metadata tests | Existing foundation; verify |
-| FR-006 Chunking | `text_processing.py` | Chunk boundary tests | Existing foundation; verify |
-| FR-010 Keyword search | `retrieval.py` | Keyword retrieval tests | Existing foundation; verify |
-| FR-011 Semantic search | `semantic_search.py` | Semantic search tests | Existing foundation; verify |
-| FR-013 Ranked results | retrieval engine | Ranking tests | Existing foundation; verify |
-| FR-014 Source metadata | search modules | Source mapping tests | Verify |
-| FR-016 Hybrid retrieval | retrieval engine | Comparative retrieval tests | Planned |
-| FR-017 Retrieval evaluation | evaluation tooling | Evaluation report | Planned |
-| FR-020 Persistent metadata | storage layer | Save/reload tests | Planned |
-| FR-021 Persistent index | vector store and storage | Index reload tests | Planned |
-| FR-025 Grounded answers | answer generation | Evidence support tests | Planned |
-| FR-026 Citations | answer and citation layers | Citation correctness tests | Planned |
-| FR-027 Citation validation | citation validator | Invalid citation tests | Planned |
-| FR-028 Insufficient evidence | retrieval and answer layers | No-evidence tests | Planned |
-| FR-031 Document UI | UI layer | UI workflow tests | Planned |
-| FR-032 Question input | UI/controller | Query submission tests | Planned |
-| FR-033 Results display | UI layer | Result rendering tests | Planned |
-| FR-038 Logging | logging configuration | Redaction and error logging tests | Planned |
-| FR-039 Setup instructions | README and setup guide | Clean-environment walkthrough | Planned |
-| FR-040 Automated tests | `tests/` | Test-run report | Existing foundation; verify |
-
 ## Status definitions
 
-- **Planned:** not implemented.
-- **In progress:** implementation exists but is incomplete.
-- **Implemented:** code exists and has been inspected.
-- **Verified:** implementation and relevant tests demonstrate the requirement.
-- **Blocked:** work cannot proceed because a dependency or decision is unresolved.
+- **Existing — verification pending:** A related module exists, but the requirement has not yet been verified completely.
+- **Planned:** The feature is intended for a future development phase.
+- **Verified:** Tests and implementation evidence demonstrate the requirement is satisfied.
+- **Blocked:** Work cannot proceed until a dependency or decision is resolved.
 
-A module existing does not automatically mean every related requirement is verified.
+## Current implementation baseline
 
-## Update procedure
+The project contains these modules:
 
-When a requirement changes:
-1. Update `SRS.md`.
-2. Update this matrix.
-3. Identify the affected implementation and tests.
-4. Run the relevant tests.
-5. Update the status only when evidence supports it.
+- `pdf_processing.py`
+- `text_processing.py`
+- `pipeline.py`
+- `retrieval.py`
+- `semantic_search.py`
+- `vector_store.py`
+- `paper_search.py`
+
+The latest observed test run passed 21 tests. This is a baseline observation,
+not proof that every requirement below is satisfied.
+
+## Requirements matrix
+
+| ID | Requirement | Related module or component | Status |
+|---|---|---|---|
+| FR-001 | Accept PDF input | `pdf_processing.py` | Existing — verification pending |
+| FR-002 | Validate input files | Ingestion | Existing — verification pending |
+| FR-003 | Extract PDF text | `pdf_processing.py` | Existing — verification pending |
+| FR-004 | Preserve source page information | `pipeline.py` | Existing — verification pending |
+| FR-006 | Split text into chunks | `text_processing.py` | Existing — verification pending |
+| FR-010 | Keyword retrieval | `retrieval.py` | Existing — verification pending |
+| FR-011 | Semantic retrieval | `semantic_search.py` | Existing — verification pending |
+| FR-012 | Validate result count | Search modules | Existing — verification pending |
+| FR-013 | Rank search results | Retrieval modules | Existing — verification pending |
+| FR-014 | Preserve source metadata in results | Search modules | Existing — verification pending |
+| FR-016 | Combine keyword and semantic retrieval | Future retrieval engine | Planned |
+| FR-017 | Measure retrieval quality | Evaluation tooling | Planned |
+| FR-018 | Handle insufficient search evidence | Retrieval workflow | Planned |
+| FR-019 | Search across multiple papers | Document library | Planned |
+| FR-020 | Persist document metadata | Storage layer | Planned |
+| FR-021 | Save and reload vector indexes | Vector storage | Planned |
+| FR-022 | Keep index and chunk ordering consistent | Vector storage | Existing design concern; verify |
+| FR-025 | Generate evidence-grounded answers | Answer generation | Planned |
+| FR-026 | Attach page-level citations | Answer and citation components | Planned |
+| FR-027 | Validate citations | Citation validator | Planned |
+| FR-028 | Handle questions without sufficient evidence | Answer generation | Planned |
+| FR-031 | Provide document selection UI | User interface | Planned |
+| FR-032 | Accept questions through the UI | User interface | Planned |
+| FR-033 | Display ranked passages | User interface | Planned |
+| FR-034 | Let users inspect source citations | User interface | Planned |
+| FR-035 | Support follow-up questions | Session management | Planned |
+| FR-037 | Centralize application configuration | Configuration module | Planned |
+| FR-038 | Provide useful operational logging | Logging module | Planned |
+| FR-039 | Document reproducible setup | README and setup guide | Documentation created; verify instructions |
+| FR-040 | Automate critical tests | `tests/` | Existing tests; broader coverage pending |
+
+## Next actions
+
+1. Inspect the implementation audit.
+2. Verify current function behavior against the requirements.
+3. Run tests for the affected modules.
+4. Change a requirement's status only when evidence supports it.
+5. Implement future requirements in dependency order.
+
+<!-- PERSISTENCE-STATUS-START -->
+## Persistence implementation tracking
+
+| Requirement | Implementation | Evidence needed | Status |
+|---|---|---|---|
+| FR-020 Persistent document metadata | `persistence.py` currently saves chunk metadata | Save/load tests and schema review | In progress |
+| FR-021 Save and reload vector index | `persistence.py` | Round-trip test and integration test | In progress |
+| FR-022 Index/chunk consistency | `persistence.py` | Mismatch and compatibility tests | Partial; count check implemented |
+| FR-024 Recover from missing or incompatible index | Future storage/recovery logic | Recovery tests | Planned |
+
+The existence of a persistence module does not mean the full persistent library
+requirement is satisfied.
+<!-- PERSISTENCE-STATUS-END -->

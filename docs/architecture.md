@@ -254,3 +254,17 @@ index reuse, and limiting the amount of context sent to a generator.
 - Hybrid retrieval and reranking method
 - Session history and deletion behavior
 - Supported operating systems and packaging format
+
+<!-- PERSISTENCE-STATUS-START -->
+## Persistence implementation update
+
+The project now has a separate persistence module for writing and reading FAISS
+indexes and JSON chunk metadata.
+
+The current implementation is a first step, not a complete document library.
+It does not yet provide document registration, index versioning, automatic
+index reuse, multi-document management, or integration with the main search flow.
+
+Before relying on saved indexes, test round-trip loading, damaged metadata,
+interrupted writes, and index compatibility.
+<!-- PERSISTENCE-STATUS-END -->

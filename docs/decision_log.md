@@ -92,3 +92,18 @@ and answer generation.
 **Consequences:** What trade-offs, implementation work, and risks follow?
 
 **Date:** YYYY-MM-DD
+
+<!-- PERSISTENCE-STATUS-START -->
+## ADR-007 — Initial persistence format
+
+**Status:** Provisional implementation
+
+**Context:** Search currently builds a FAISS index in memory.
+
+**Decision:** Begin with a FAISS index file and a JSON file containing the
+matching chunk records.
+
+**Consequences:** This is easy to inspect and test, but the pair needs stronger
+versioning and recovery guarantees before it is treated as a reliable library
+format. Model compatibility and index metadata remain future work.
+<!-- PERSISTENCE-STATUS-END -->

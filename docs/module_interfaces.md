@@ -242,3 +242,24 @@ For every public function, document:
 - Empty-input behavior
 - Side effects
 - Unit tests
+
+<!-- PERSISTENCE-STATUS-START -->
+## Persistence module
+
+Module: `src/researchpilot/persistence.py`
+
+Current public functions:
+
+- `save_search_data(index, chunks, storage_dir)`: saves a FAISS index and matching chunk records.
+- `load_search_data(storage_dir)`: loads the saved index and chunk records.
+
+The loader checks that the number of vectors matches the number of chunks.
+
+Current limitations:
+- No model or index version metadata.
+- No automatic rebuild of stale indexes.
+- No integration with `paper_search.py`.
+- No multi-document library manager.
+
+Tests are located in `tests/test_persistence.py`.
+<!-- PERSISTENCE-STATUS-END -->

@@ -150,3 +150,19 @@ Do not release while critical tests fail, source metadata is incorrect, or
 citations are presented as verified without validation.
 
 Any known limitation accepted for release must be documented.
+
+<!-- PERSISTENCE-STATUS-START -->
+## Persistence test coverage
+
+`tests/test_persistence.py` introduces tests for:
+
+- Saving and loading an index and its chunks.
+- Creating a storage directory when needed.
+- Rejecting vector/chunk count mismatches.
+- Reporting missing saved files.
+- Rejecting inconsistent saved chunk metadata.
+
+Run the full test suite after adding these tests. Passing these tests does not
+by itself establish crash-safe storage, index version compatibility, or
+integration with the application's search workflow.
+<!-- PERSISTENCE-STATUS-END -->

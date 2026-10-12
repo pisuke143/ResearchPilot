@@ -245,3 +245,23 @@ Do not mark a milestone complete based only on code being written.
 4. Record the current baseline.
 5. Select the first uncompleted phase.
 6. Make one small change and verify it.
+
+<!-- PERSISTENCE-STATUS-START -->
+## Persistence milestone update
+
+The first persistence module has been added, and automated tests have been
+prepared for its basic behavior.
+
+Remaining work before persistence can be considered integrated:
+
+1. Run the new persistence tests.
+2. Correct any failures.
+3. Add index/model metadata and compatibility checks.
+4. Review recovery behavior if one saved file is missing or corrupted.
+5. Integrate persistence into the search workflow.
+6. Test that a saved index can be reused without rebuilding embeddings.
+7. Run the full regression suite.
+
+Do not mark the persistence milestone complete until the integrated workflow
+and its tests pass.
+<!-- PERSISTENCE-STATUS-END -->

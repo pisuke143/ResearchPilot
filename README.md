@@ -55,3 +55,12 @@ target system, not a claim that all features already exist.
 
 Complete the requirements and architecture, inspect and test the existing
 implementation, and then follow the development roadmap in order.
+
+<!-- PERSISTENCE-STATUS-START -->
+## Persistence implementation status
+
+- `src/researchpilot/persistence.py` provides functions to save and load a FAISS index and its corresponding chunk metadata.
+- `tests/test_persistence.py` tests round-trip behavior, missing files, and index/chunk count consistency.
+- Persistence is not yet integrated into `paper_search.py`.
+- The saved index and metadata must always remain consistent.
+<!-- PERSISTENCE-STATUS-END -->

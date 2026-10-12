@@ -161,3 +161,19 @@ Test at least:
 - A query with evidence on multiple pages
 - A missing or stale index
 - A citation pointing to an unknown chunk
+
+<!-- PERSISTENCE-STATUS-START -->
+## Implemented persistence step
+
+The initial persistence module stores two files:
+
+- `index.faiss`: the FAISS vector index.
+- `chunks.json`: the matching chunk records.
+
+The two files must describe the same ordered collection. Loading rejects a
+vector/chunk count mismatch.
+
+This initial format does not yet include a manifest containing the embedding
+model, dimension, preprocessing configuration, or schema version. Those checks
+must be designed before indexes are reused across model or configuration changes.
+<!-- PERSISTENCE-STATUS-END -->

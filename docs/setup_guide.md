@@ -129,3 +129,15 @@ randomly upgrading unrelated packages.
 
 Capture the complete error, identify the failing test, and reproduce it before
 changing application code.
+
+## Running tests from the project root
+
+Set the source folder on Python's import path for this terminal session:
+
+```powershell
+$env:PYTHONPATH = Join-Path (Get-Location).Path "src"
+python -m unittest discover -s tests -v
+```
+
+This makes the `researchpilot` package discoverable when running tests from
+a source-layout project.
